@@ -1,0 +1,10 @@
+
+<mat-toolbar *ngIf="user">
+    <a routerLink="/">Home</a>&nbsp;&nbsp;
+    <a (click)="logout()" style="cursor: pointer;">Logout</a>
+  </mat-toolbar>
+
+<!-- main app container -->
+<div class="container">
+    <router-outlet></router-outlet>
+</div>

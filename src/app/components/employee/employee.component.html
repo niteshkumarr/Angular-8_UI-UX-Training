@@ -1,0 +1,104 @@
+<mat-card>
+    <mat-toolbar color="accent" class="header">
+        <span> Angular CRUD Operation With Angular Material</span>
+
+        <mat-chip-list>
+            <mat-chip *ngIf="dataSaved" color="primary" selected>{{ message }}</mat-chip>
+        </mat-chip-list>
+
+    </mat-toolbar><br />
+
+    <mat-card-content class="flex">
+        <form [formGroup]="employeeForm">
+            <table class="empForm">
+                <tr>
+                    <td>
+                        <mat-form-field>
+                            <input matInput placeholder="First Name" formControlName="firstName" required/>
+                            <mat-error *ngIf="employeeForm.controls['firstName'].hasError('required')">
+                                First Name is required.
+                            </mat-error>
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-form-field>
+                            <input matInput placeholder="Last Name" formControlName="lastName" />
+                        </mat-form-field>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <mat-form-field>
+                            <input matInput formControlName="empEmail" placeholder="E-Mail"required/>
+                            <mat-error *ngIf="employeeForm.controls['empEmail'].hasError('required')">
+                                Email is required.
+                            </mat-error>
+                            <mat-error *ngIf="employeeForm.controls['empEmail'].hasError('email')">
+                                Email is not valid.
+                            </mat-error>
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-form-field>
+                            <input matInput placeholder="Designation" formControlName="designation" />
+                        </mat-form-field>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span>Gender</span><br><br>
+                        <mat-radio-group formControlName="gender">
+                            <mat-radio-button value="0">Male</mat-radio-button>&nbsp;
+                            <mat-radio-button value="1">Female</mat-radio-button>
+                        </mat-radio-group>;
+                    </td>
+
+                    <td>
+                        <mat-form-field>
+                            <input matInput placeholder="Address" formControlName="address" />
+                        </mat-form-field>
+                    </td>
+                </tr><br>
+                <tr>
+                    <td></td>
+                    <td colspan="2" style="float: right;">
+                        <button type="submit" mat-raised-button color="accent" (click)="onFormSubmit()">Submit</button>&nbsp;
+                        <button type="reset" mat-raised-button color="accent" (click)="resetForm()">Reset</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <div>
+            <table id="customers">
+                <tr>
+                    <th>ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Designation</th>
+                    <th>Gender</th>
+                    <th>Address</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+                <tr *ngFor="let employee of allEmployees | async">
+                    <td>{{employee.id}}</td>
+                    <td>{{employee.firstName}}</td>
+                    <td>{{employee.lastName}}</td>
+                    <td>{{employee.empEmail}}</td>
+                    <td>{{employee.designation}}</td>
+                    <td>{{employee.gender == 0 ? 'Male' : 'Female'}}</td>
+                    <td>{{employee.address}}</td>
+                    <td>
+                        <button type="button" mat-raised-button color="primary"
+                            (click)="loadEmployeeToEdit(employee.id)">Edit</button>
+                    </td>
+                    <td>
+                        <button type="button" mat-raised-button color="warn"
+                            (click)="deleteEmployee(employee.id)">Delete</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </mat-card-content>
+</mat-card>
